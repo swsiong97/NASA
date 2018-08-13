@@ -24,21 +24,7 @@ function getSettings(){
       timeToEnableNextBtn = parseInt(settings);
     },
     error: function(jqXHR,exception){
-      if (jqXHR.status === 0) {
-            alert('Not connect.\n Verify Network.');
-        } else if (jqXHR.status == 404) {
-            alert('Requested page not found. [404]');
-        } else if (jqXHR.status == 500) {
-            alert('Internal Server Error [500].');
-        } else if (exception === 'parsererror') {
-            alert('Requested JSON parse failed.');
-        } else if (exception === 'timeout') {
-            alert('Time out error.');
-        } else if (exception === 'abort') {
-            alert('Ajax request aborted.');
-        } else {
-            alert('Uncaught Error.\n' + jqXHR.responseText);
-        }
+      checkingError(jqXHR.status, exception);
     }
   });
 }
@@ -64,21 +50,7 @@ function getNews(userId){
       }
     },
     error: function(jqXHR,exception){
-      if (jqXHR.status === 0) {
-            alert('Not connect.\n Verify Network.');
-        } else if (jqXHR.status == 404) {
-            alert('Requested page not found. [404]');
-        } else if (jqXHR.status == 500) {
-            alert('Internal Server Error [500].');
-        } else if (exception === 'parsererror') {
-            alert('Requested JSON parse failed.');
-        } else if (exception === 'timeout') {
-            alert('Time out error.');
-        } else if (exception === 'abort') {
-            alert('Ajax request aborted.');
-        } else {
-            alert('Uncaught Error.\n' + jqXHR.responseText);
-        }
+      checkingError(jqXHR.status, exception);
     }
   });
 }
@@ -174,21 +146,7 @@ function checkUserTimeOut(){
      }
    },
    error: function(jqXHR,exception){
-     if (jqXHR.status === 0) {
-           alert('Not connect.\n Verify Network.');
-       } else if (jqXHR.status == 404) {
-           alert('Requested page not found. [404]');
-       } else if (jqXHR.status == 500) {
-           alert('Internal Server Error [500].');
-       } else if (exception === 'parsererror') {
-           alert('Requested JSON parse failed.');
-       } else if (exception === 'timeout') {
-           alert('Time out error.');
-       } else if (exception === 'abort') {
-           alert('Ajax request aborted.');
-       } else {
-           alert('Uncaught Error.\n' + jqXHR.responseText);
-       }
+     checkingError(jqXHR.status, exception);
    }
  });
 }
@@ -232,4 +190,22 @@ function storeSentiment(){
        }
    }
  });
+}
+
+function checkingError(errorMessage, exception){
+  if (errorMessage === 0) {
+        alert('Not connect.\n Verify Network.');
+    } else if (errorMessage == 404) {
+        alert('Requested page not found. [404]');
+    } else if (errorMessage == 500) {
+        alert('Internal Server Error [500].');
+    } else if (exception === 'parsererror') {
+        alert('Requested JSON parse failed.');
+    } else if (exception === 'timeout') {
+        alert('Time out error.');
+    } else if (exception === 'abort') {
+        alert('Ajax request aborted.');
+    } else {
+        alert('Uncaught Error.\n' + jqXHR.responseText);
+    }
 }
