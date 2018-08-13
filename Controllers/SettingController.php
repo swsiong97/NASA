@@ -100,63 +100,19 @@ class SettingController extends Controller
    $getStemmingWord = $request->StemmingWord == 'true' ? '1' : '0';
    if($request->NewPassword == "" && $request->OldPassword == ""){
    }else{
-     settings::where('name', 'password')
-             ->update([
-               'value' => Hash::make($request->NewPassword),
-               'updatedTime' => date('Y-m-d G:i:s')
-             ]);
+     $this->savingPassword($request->NewPassword);
    }
-   settings::where('name', 'url')
-           ->update([
-             'value' => $request->Url,
-             'updatedTime' => date('Y-m-d G:i:s')
-           ]);
-   settings::where('name', 'housekeep')
-           ->update([
-            'value' => $request->Housekeep,
-            'updatedTime' => date('Y-m-d G:i:s')
-           ]);
+     $this->savingOther("url", $request->Url);
+     $this->savingOther("housekeep", $request->Housekeep);
 
-   $port = settings::where('name', 'port')
-           ->update([
-             'value' => $request->Port,
-             'updatedTime' => date('Y-m-d G:i:s')
-           ]);
-   $stemmingWord = settings::where('name', 'stemmingWord')
-           ->update([
-             'value' => $getStemmingWord,
-             'updatedTime' => date('Y-m-d G:i:s')
-          ]);
-   $rmvComWord = settings::where('name', 'rmvCommonWord')
-           ->update([
-             'value' => $getRmvComWord,
-             'updatedTime' => date('Y-m-d G:i:s')
-          ]);
-   $enableNextBtn = settings::where('name', 'enableNextBtn')
-           ->update([
-             'value' => $request->Timetoenablenextbutton,
-             'updatedTime' => date('Y-m-d G:i:s')
-           ]);
-   $randomState = settings::where('name', 'randomstate')
-          ->update([
-             'value' => $request->RandomState,
-             'updatedTime' => date('Y-m-d G:i:s')
-           ]);
-   $nb_epoch = settings::where('name', 'nb_epoch')
-          ->update([
-             'value' => $request->nb_epoch,
-             'updatedTime' => date('Y-m-d G:i:s')
-           ]);
-   $train_verbose =settings::where('name', 'train_verbose')
-          ->update([
-             'value' => $request->TrainVerbose,
-             'updatedTime' => date('Y-m-d G:i:s')
-           ]);
-$evaluate_verbose = settings::where('name', 'evaluate_verbose')
-          ->update([
-             'value' => $request->EvaluateVerbose,
-             'updatedTime' => date('Y-m-d G:i:s')
-           ]);
+   $port = $this->savingOther("port", $request->Port);
+   $stemmingWord = $this->savingOther("stemmingWord", $getStemmingWord);
+   $rmvComWord = $this->savingOther("rmvCommonWord", $getRmvComWord);
+   $enableNextBtn = $this->savingOther("enableNextBtn", $request->Timetoenablenextbutton);
+   $randomState = $this->savingOther("randomstate", $request->RandomState);
+   $nb_epoch = $this->savingOther("nb_epoch", $request->nb_epoch);
+   $train_verbose = $this->savingOther("train_verbose", $request->TrainVerbose);
+   $evaluate_verbose = $this->savingOther("evaluate_verbose", $request->EvaluateVerbose);
 
            if($port || $stemmingWord || $rmvComWord || $enableNextBtn || $randomState || $nb_epoch || $train_verbose || $evaluate_verbose){
              $this->retrain();
@@ -195,5 +151,20 @@ public function retrain(){
    }else{
      return 'false';
    }
+ }
+
+ private function savingPassword($password){
+   settings::where('name', 'password')
+           ->update([
+             'value' => Hash::make($request->NewPassword),
+             'updatedTime' => date('Y-m-d G:i:s')
+           ]);
+ }
+ private function savingOther($name, $value){
+   settings::where('name', $name)
+           ->update([
+             'value' => $value,
+             'updatedTime' => date('Y-m-d G:i:s')
+           ]);
  }
 }
