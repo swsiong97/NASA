@@ -50,7 +50,7 @@ function getNews(userId){
       }
     },
     error: function(jqXHR,exception){
-      checkingError(jqXHR.status, exception);
+      checkingError(jqXHR, exception);
     }
   });
 }
@@ -155,7 +155,7 @@ function checkUserTimeOut(){
      }
    },
    error: function(jqXHR,exception){
-     checkingError(jqXHR.status, exception);
+     checkingError(jqXHR, exception);
    }
  });
 }
@@ -188,17 +188,17 @@ function storeSentiment(){
 }
 
 function checkingError(errorMessage, exception){
-  if (errorMessage.status === 0) {
+  if (errorMessage.status == 0) {
         alert('Not connect.\n Verify Network.');
     } else if (errorMessage.status == 404) {
         alert('Requested page not found. [404]');
     } else if (errorMessage.status == 500) {
         alert('Internal Server Error [500].');
-    } else if (exception === 'parsererror') {
+    } else if (exception == 'parsererror') {
         alert('Requested JSON parse failed.');
-    } else if (exception === 'timeout') {
+    } else if (exception == 'timeout') {
         alert('Time out error.');
-    } else if (exception === 'abort') {
+    } else if (exception == 'abort') {
         alert('Ajax request aborted.');
     } else {
         alert('Uncaught Error.\n' + errorMessage.responseText);

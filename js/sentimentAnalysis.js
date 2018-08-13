@@ -43,7 +43,7 @@ function checkBtn(){
 }
 }
 function checkingError(errorMessage, exception){
-  if (errorMessage.status === 0) {
+  if (errorMessage.status == 0) {
         alert('Not connect.\n Verify Network.');
     } else if (errorMessage.status == 404) {
         alert('Requested page not found. [404]');
