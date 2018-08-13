@@ -82,19 +82,13 @@ function toastErrorMessage() {
 }
 
 $("#ngtBtn").click(function(){
-    $("#content").removeClass("border-3 border-primary border-success");
-    $("#content").addClass("border-3 border-danger");
-    sentiment = -1;
+    displaySentimentSelected(-1);
 });
 $("#nutBtn").click(function(){
-    $("#content").removeClass("border-3 border-danger border-success");
-    $("#content").addClass("border-3 border-primary");
-    sentiment = 0;
+    displaySentimentSelected(0);
 });
 $("#pstBtn").click(function(){
-    $("#content").removeClass("border-3 border-primary border-danger");
-    $("#content").addClass("border-3 border-success");
-    sentiment = 1;
+    displaySentimentSelected(1);
 });
 $("#nxtBtn").click(function(){
     if(sentiment == "NULL"){
@@ -113,6 +107,21 @@ $("#nxtBtn").click(function(){
 
 });
 
+function displaySentimentSelected(sentiment){
+  if(sentiment == 0){
+    $("#content").removeClass("border-3 border-danger border-success");
+    $("#content").addClass("border-3 border-primary");
+    sentiment = 0;
+  }else if(sentiment == 1){
+    $("#content").removeClass("border-3 border-primary border-danger");
+    $("#content").addClass("border-3 border-success");
+    sentiment = 1;
+  }else{
+    $("#content").removeClass("border-3 border-primary border-success");
+    $("#content").addClass("border-3 border-danger");
+    sentiment = -1;
+  }
+}
 function enable(){
   $("#pstBtn").removeAttr("disabled");
   $("#ngtBtn").removeAttr("disabled");
@@ -173,21 +182,7 @@ function storeSentiment(){
 
    },
    error: function(jqXHR,exception){
-     if (jqXHR.status === 0) {
-           alert('Not connect.\n Verify Network.');
-       } else if (jqXHR.status == 404) {
-           alert('Requested page not found. [404]');
-       } else if (jqXHR.status == 500) {
-           alert('Internal Server Error [500].');
-       } else if (exception === 'parsererror') {
-           alert('Requested JSON parse failed.');
-       } else if (exception === 'timeout') {
-           alert('Time out error.');
-       } else if (exception === 'abort') {
-           alert('Ajax request aborted.');
-       } else {
-           alert('Uncaught Error.\n' + jqXHR.responseText);
-       }
+     checkingError(jqXHR.status, exception);
    }
  });
 }
