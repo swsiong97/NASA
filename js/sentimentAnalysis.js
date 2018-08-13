@@ -21,21 +21,15 @@ function checkBtn(){
         var result = JSON.parse(aResult);
         if(result.result == "1"){
           sentimentResult.innerHTML = "positive";
-          $("#sentimentResult").removeClass("text-success");
-          $("#sentimentResult").removeClass("text-danger");
-          $("#sentimentResult").removeClass("text-primary");
+          removeClass();
           $("#sentimentResult").addClass("text-success");
         }else if(result.result == "0"){
           sentimentResult.innerHTML = "neutral";
-          $("#sentimentResult").removeClass("text-success");
-          $("#sentimentResult").removeClass("text-danger");
-          $("#sentimentResult").removeClass("text-primary");
+          removeClass();
           $("#sentimentResult").addClass("text-primary");
         }else if(result.result == "-1"){
           sentimentResult.innerHTML = "negative";
-          $("#sentimentResult").removeClass("text-success");
-          $("#sentimentResult").removeClass("text-danger");
-          $("#sentimentResult").removeClass("text-primary");
+          removeClass();
           $("#sentimentResult").addClass("text-danger");
         }else {
           alert('cannot connect to sentiment analysis engine')
@@ -84,3 +78,8 @@ function disable(){
   $("#clearBtn").attr("disabled","true");
   $("#loader").css("display","block");
 }
+ function removeClass(){
+   $("#sentimentResult").removeClass("text-success");
+   $("#sentimentResult").removeClass("text-danger");
+   $("#sentimentResult").removeClass("text-primary");
+ }
