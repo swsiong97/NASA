@@ -182,17 +182,17 @@ function storeSentiment(){
 
    },
    error: function(jqXHR,exception){
-     checkingError(jqXHR.status, exception);
+     checkingError(jqXHR, exception);
    }
  });
 }
 
 function checkingError(errorMessage, exception){
-  if (errorMessage === 0) {
+  if (errorMessage.status === 0) {
         alert('Not connect.\n Verify Network.');
-    } else if (errorMessage == 404) {
+    } else if (errorMessage.status == 404) {
         alert('Requested page not found. [404]');
-    } else if (errorMessage == 500) {
+    } else if (errorMessage.status == 500) {
         alert('Internal Server Error [500].');
     } else if (exception === 'parsererror') {
         alert('Requested JSON parse failed.');
@@ -201,6 +201,6 @@ function checkingError(errorMessage, exception){
     } else if (exception === 'abort') {
         alert('Ajax request aborted.');
     } else {
-        alert('Uncaught Error.\n' + jqXHR.responseText);
+        alert('Uncaught Error.\n' + errorMessage.responseText);
     }
 }
